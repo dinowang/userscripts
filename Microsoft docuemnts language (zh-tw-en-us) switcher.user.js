@@ -8,19 +8,19 @@
 // @grant        none
 // ==/UserScript==
 
-(function() {
+(function () {
     'use strict';
 
     (function () {
-        var langs = [ "zh-tw", "zh-cn", "en-us" ],
+        var langs = ["zh-tw", "zh-cn", "en-us"],
             pathParts = location.pathname.split(/\//g),
             currentLang = pathParts[1];
 
         var style = document.createElement('style');
         style.type = "text/css";
         style.innerHTML = ".msex-container { position: fixed; bottom: 0px; right: 0px; background-color: #333; text-align: center; padding: 0 8px; }" +
-                          ".msex-container a { font-size: 9pt; }" +
-                          ".msex-container a:not(:last-child):after { content: \"|\"; margin: 0 4px; color: #777; }";
+            ".msex-container a { font-size: 9pt; }" +
+            ".msex-container a:not(:last-child):after { content: \"|\"; margin: 0 4px; color: #777; }";
         document.getElementsByTagName('head')[0].appendChild(style);
 
         if (currentLang && currentLang.match(/^(zh-tw|zh-cn|en-us)/)) {
@@ -33,20 +33,17 @@
                 var langToggle = document.createElement("a");
                 langToggle.href = "#"
                 langToggle.innerText = "language toggle";
-                langToggle.onclick = function () {
-                    toogleButton.click();
-                };
+                langToggle.onclick = _ => toogleButton.click();
                 container.appendChild(langToggle);
             }
 
-            for (var i = 0; i < langs.length; i++) {
-                var lang = langs[i];
+            langs.forEach(lang => {
                 pathParts[1] = lang;
                 var a = document.createElement("a");
                 a.href = currentLang == lang ? "#" : location.origin + pathParts.join("/");
                 a.innerText = lang;
                 container.appendChild(a);
-            }
+            });
         }
     })();
 })();
